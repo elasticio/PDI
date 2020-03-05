@@ -22,13 +22,9 @@
             }
           }
         },
-        "out": {}
-      },
-      "fields": {
-        "files": {
-          "label": "Files",
-          "required": true,
-          "viewClass": "TextFieldView"
+        "out": {
+          "type":"object",
+          "title":"response"
         }
       }
     }
