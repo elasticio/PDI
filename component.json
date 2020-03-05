@@ -1,97 +1,34 @@
 {
-  "title": "REST API",
-  "description": "A generic connector for accessing HTTP and REST APIs .",
+  "title": "PDI Component",
+  "description": "A component built to streamline the file transformation process .",
   "buildType": "docker",
-  "docsUrl": "https://github.com/elasticio/rest-api-component",
-  "credentials": {
-    "fields": {
-      "auth": {
-        "required": false,
-        "viewClass": "HTTPAuthView"
-      }
-    },
-    "oauth2" : {
-      "client_id" : "{{clientId}}",
-      "client_secret" : "{{clientSecret}}",
-      "auth_uri" : "{{authUri}}",
-      "token_uri" : "{{tokenUri}}"
-    }
-  },
-  "triggers": {
-    "httpRequestTrigger": {
-      "main": "./lib/triggers/httpRequestTrigger.js",
-      "title": "HTTP request",
-      "description": "Will send a GET/POST/PUT/DELETE HTTP request and parse the response back to the flow",
-      "type": "polling",
-      "metadata": {
-        "out": {}
-      },
-      "fields": {
-        "reader": {
-          "label": "REST API",
-          "required": true,
-          "viewClass": "RESTAPIView"
-        },
-        "dontThrowErrorFlg": {
-          "label": "Don`t throw Error on Failed Calls",
-          "viewClass": "CheckBoxView"
-        },
-        "splitResult": {
-          "label": "Split Result if it is an Array",
-          "viewClass": "CheckBoxView",
-          "note": "After making the request, and applying the above JSONata expression, if the result is an array and this box is checked, we will emit one message for each element of the array."
-        },
-        "enableRebound": {
-          "label": "Retry on failure",
-          "viewClass": "CheckBoxView"
-        },
-        "followRedirect": {
-          "label": "Follow redirect mode",
-          "viewClass": "SelectView",
-          "model": {
-            "followRedirects": "Follow redirects",
-            "doNotFollowRedirects": "Do not follow redirects"
-          },
-          "prompt": "Follow redirects (default)"
-        }
-      }
-    }
-  },
   "actions": {
-    "httpRequestAction": {
-      "main": "./lib/actions/httpRequestAction.js",
-      "title": "HTTP request",
-      "description": "Will send a GET/POST/PUT/DELETE HTTP request and parse the response back to the flow",
+    "processAndRequest": {
+      "main": "./lib/actions/processAndRequest.js",
+      "title": "Process & GET files",
+      "description": "Formats file URLs and makes corresponding GET requests",
       "metadata": {
+        "in": {
+          "type": "object",
+          "properties": {
+            "files": {
+              "title": "Files",
+              "type": "array",
+              "required": "true",
+              "items": {
+                "title":"File",
+                "type":"string"
+              }
+            }
+          }
+        },
         "out": {}
       },
       "fields": {
-        "reader": {
-          "label": "REST API",
+        "files": {
+          "label": "Files",
           "required": true,
-          "viewClass": "RESTAPIView"
-        },
-        "dontThrowErrorFlg": {
-          "label": "Don`t throw Error on Failed Calls",
-          "viewClass": "CheckBoxView"
-        },
-        "splitResult": {
-          "label": "Split Result if it is an Array",
-          "viewClass": "CheckBoxView",
-          "note": "After making the request, and applying the above JSONata expression, if the result is an array and this box is checked, we will emit one message for each element of the array."
-        },
-        "enableRebound": {
-          "label": "Retry on failure",
-          "viewClass": "CheckBoxView"
-        },
-        "followRedirect": {
-          "label": "Follow redirect mode",
-          "viewClass": "SelectView",
-          "model": {
-            "followRedirects": "Follow redirects",
-            "doNotFollowRedirects": "Do not follow redirects"
-          },
-          "prompt": "Follow redirects (default)"
+          "viewClass": "TextFieldView"
         }
       }
     }
